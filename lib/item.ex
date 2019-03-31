@@ -1,5 +1,8 @@
 defmodule Item do
-
+  @moduledoc """
+  This is an agent router. Most code here(this module) is about spliting API between processes.
+  Business logic here is simple "item.count++"
+  """
   defstruct product: nil, count: 1
 
   @spec get_pid(atom) :: pid

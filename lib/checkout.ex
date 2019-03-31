@@ -6,6 +6,10 @@ defmodule Checkout do
 
   @type t :: %Checkout{VOUCHER: pid, TSHIRT: pid, MUG: pid}
 
+  @doc """
+  items is a map product type -> pid. For each type of product there is a separate process
+  This is a way of CPU scaling at checkout app.
+  """
   @spec scan(Checkout.t, string) :: Checkout.t
   def scan(items, code) do
     code
@@ -13,6 +17,11 @@ defmodule Checkout do
     |> Item.add(items)
   end
 
+  @doc """
+  Function total should be executed once in general after all scans and before buy.
+  It seems no sence to cache total result at each scan.
+  Here is classic MapReduce pattern for parallel calculation a price rules per product(I mean CFO rulse, etc)
+  """
   @spec total(Checkout.t) :: float
   def total(items) do
     items
